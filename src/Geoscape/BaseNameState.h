@@ -41,7 +41,7 @@ private:
 	Base *_base;
 	Globe *_globe;
 	Window *_window;
-	Text *_txtTitle;
+	Text *_txtTitle, *_txtArea;
 	TextEdit *_edtName;
 	TextButton *_btnOk;
 	bool _first;

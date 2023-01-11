@@ -25,7 +25,9 @@
 #include "../Interface/TextButton.h"
 #include "../Savegame/SavedGame.h"
 #include "../Savegame/Region.h"
+#include "../Savegame/Country.h"
 #include "../Mod/RuleRegion.h"
+#include "../Mod/RuleCountry.h"
 #include "../Savegame/Base.h"
 #include "BaseNameState.h"
 #include "../Menu/ErrorMessageState.h"
@@ -51,7 +53,7 @@ ConfirmNewBaseState::ConfirmNewBaseState(Base *base, Globe *globe) : _base(base)
 	_btnOk = new TextButton(54, 12, 68, 104);
 	_btnCancel = new TextButton(54, 12, 138, 104);
 	_txtCost = new Text(120, 9, 68, 80);
-	_txtArea = new Text(120, 9, 68, 90);
+	_txtArea = new Text(160, 9, 68, 90);
 
 	// Set palette
 	setInterface("geoscape");
@@ -85,10 +87,25 @@ ConfirmNewBaseState::ConfirmNewBaseState(Base *base, Globe *globe) : _base(base)
 			break;
 		}
 	}
+	for (std::vector<Country *>::iterator i = _game->getSavedGame()->getCountries()->begin(); i != _game->getSavedGame()->getCountries()->end(); ++i)
+	{
+		if ((*i)->getRules()->insideCountry(_base->getLongitude(), _base->getLatitude()))
+		{
+			country = tr((*i)->getRules()->getType());
+			break;
+		}
+	}
 
 	_txtCost->setText(tr("STR_COST_").arg(Unicode::formatFunding(_cost)));
 
-	_txtArea->setText(tr("STR_AREA_").arg(area));
+	if (country.empty())
+	{
+		_txtArea->setText(tr("STR_AREA_").arg(area));
+	}
+	else
+	{
+		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(area)));
+	}
 }
 
 /**
