@@ -25,6 +25,11 @@
 #include "../Interface/TextEdit.h"
 #include "../Interface/TextButton.h"
 #include "../Savegame/Base.h"
+#include "../Savegame/SavedGame.h"
+#include "../Savegame/Region.h"
+#include "../Savegame/Country.h"
+#include "../Mod/RuleRegion.h"
+#include "../Mod/RuleCountry.h"
 #include "../Basescape/PlaceLiftState.h"
 #include "../Engine/Options.h"
 #include "../Engine/RNG.h"
@@ -51,6 +56,7 @@ BaseNameState::BaseNameState(Base *base, Globe *globe, bool first, bool fixedLoc
 	_btnOk = new TextButton(162, 12, 47, 118);
 	_txtTitle = new Text(182, 17, 37, 70);
 	_edtName = new TextEdit(this, 127, 16, 59, 94);
+	_txtArea = new Text(160, 9, 68, 84);
 
 	// Set palette
 	setInterface("baseNaming");
@@ -59,6 +65,7 @@ BaseNameState::BaseNameState(Base *base, Globe *globe, bool first, bool fixedLoc
 	add(_btnOk, "button", "baseNaming");
 	add(_txtTitle, "text", "baseNaming");
 	add(_edtName, "text", "baseNaming");
+	add(_txtArea, "genericText", "geoscape");
 
 	centerAllSurfaces();
 
@@ -76,6 +83,32 @@ BaseNameState::BaseNameState(Base *base, Globe *globe, bool first, bool fixedLoc
 	_txtTitle->setAlign(ALIGN_CENTER);
 	_txtTitle->setBig();
 	_txtTitle->setText(tr("STR_BASE_NAME"));
+
+	std::string area, country;
+	for (std::vector<Region *>::iterator i = _game->getSavedGame()->getRegions()->begin(); i != _game->getSavedGame()->getRegions()->end(); ++i)
+	{
+		if ((*i)->getRules()->insideRegion(_base->getLongitude(), _base->getLatitude()))
+		{
+			area = tr((*i)->getRules()->getType());
+			break;
+		}
+	}
+	for (std::vector<Country *>::iterator i = _game->getSavedGame()->getCountries()->begin(); i != _game->getSavedGame()->getCountries()->end(); ++i)
+	{
+		if ((*i)->getRules()->insideCountry(_base->getLongitude(), _base->getLatitude()))
+		{
+			country = tr((*i)->getRules()->getType());
+			break;
+		}
+	}
+	if (country.empty())
+	{
+		_txtArea->setText(tr("STR_AREA_").arg(area));
+	}
+	else
+	{
+		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(area)));
+	}
 
 	if (!_game->getMod()->getBaseNamesFirst().empty())
 	{
