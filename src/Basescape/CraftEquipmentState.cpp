@@ -43,6 +43,7 @@
 #include "../Savegame/Craft.h"
 #include "../Mod/RuleCraft.h"
 #include "../Savegame/ItemContainer.h"
+#include "../Savegame/Soldier.h"
 #include "../Mod/RuleItemCategory.h"
 #include "../Mod/RuleItem.h"
 #include "../Savegame/Vehicle.h"
@@ -78,7 +79,9 @@ CraftEquipmentState::CraftEquipmentState(Base *base, size_t craft) :
 	_btnQuickSearch = new TextEdit(this, 48, 9, 264, 12);
 	_btnOk = new TextButton((craftHasACrew || _isNewBattle)?30:140, 16, (craftHasACrew || _isNewBattle)?274:164, 176);
 	_btnClear = new TextButton(102, 16, 164, 176);
-	_btnInventory = new TextButton(102, 16, 164, 176);
+	_btnInventory = new TextButton(70, 16, 196, 176);
+	_btnInventoryPlus = new TextButton(16, 16, 164, 176);
+	_btnInventoryMinus = new TextButton(16, 16, 180, 176);
 	_txtTitle = new Text(300, 17, 16, 7);
 	_txtItem = new Text(144, 9, 16, 32);
 	_txtStores = new Text(150, 9, 160, 32);
@@ -98,6 +101,8 @@ CraftEquipmentState::CraftEquipmentState(Base *base, size_t craft) :
 	add(_btnOk, "button", "craftEquipment");
 	add(_btnClear, "button", "craftEquipment");
 	add(_btnInventory, "button", "craftEquipment");
+	add(_btnInventoryPlus, "button", "craftEquipment");
+	add(_btnInventoryMinus, "button", "craftEquipment");
 	add(_txtTitle, "text", "craftEquipment");
 	add(_txtItem, "text", "craftEquipment");
 	add(_txtStores, "text", "craftEquipment");
@@ -127,6 +132,14 @@ CraftEquipmentState::CraftEquipmentState(Base *base, size_t craft) :
 	_btnInventory->onMouseClick((ActionHandler)&CraftEquipmentState::btnInventoryClick);
 	_btnInventory->setVisible(craftHasACrew && !_isNewBattle);
 	_btnInventory->onKeyboardPress((ActionHandler)&CraftEquipmentState::btnInventoryClick, Options::keyBattleInventory);
+
+	_btnInventoryPlus->setText("+");
+	_btnInventoryPlus->onMouseClick((ActionHandler)&CraftEquipmentState::btnInventoryClick);
+	_btnInventoryPlus->setVisible(craftHasACrew && !_isNewBattle);
+
+	_btnInventoryMinus->setText("-");
+	_btnInventoryMinus->onMouseClick((ActionHandler)&CraftEquipmentState::btnInventoryClick);
+	_btnInventoryMinus->setVisible(craftHasACrew && !_isNewBattle);
 
 	_txtTitle->setBig();
 	_txtTitle->setText(tr("STR_EQUIPMENT_FOR_CRAFT").arg(c->getName(_game->getLanguage())));
@@ -247,7 +260,7 @@ void CraftEquipmentState::init()
 	Craft *c = _base->getCrafts()->at(_craft);
 	c->setInBattlescape(false);
 
-	if (Options::oxceAlternateCraftEquipmentManagement && _returningFromInventory)
+	if (_returningFromInventory)
 	{
 		// While in the inventory screen, the `soldierItems` list is used as a temporary way to remember extra equipment.
 		// Now that we're back, we need to remove all the excess base gear, and restore the items list to their usual meaning.
@@ -946,14 +959,50 @@ void CraftEquipmentState::btnClearClick(Action *)
  * inside the craft.
  * @param action Pointer to an action.
  */
-void CraftEquipmentState::btnInventoryClick(Action *)
+void CraftEquipmentState::btnInventoryClick(Action *action)
 {
 	Craft *craft = _base->getCrafts()->at(_craft);
 	if (craft->getNumTotalSoldiers() > 0)
 	{
-		_returningFromInventory = true;
-		if (Options::oxceAlternateCraftEquipmentManagement && !_isNewBattle)
+		bool apocInventory = (action->getSender() == _btnInventoryMinus) || (Options::oxceAlternateCraftEquipmentManagement && !action->isMouseAction()) || _game->isAltPressed();
+		bool fullInventory = (action->getSender() == _btnInventoryPlus) || _game->isCtrlPressed();
+		if ((apocInventory || fullInventory) && !_isNewBattle)
 		{
+			// Find all equipped items in the base so that we can filter these "reserved" items out when using Apocalypse style inventory management. Adapted from Craft::calculateTotalSoldierEquipment()
+			ItemContainer tempBaseSoldierEquipmentItems;
+			if (apocInventory && !fullInventory)
+			{
+				for (auto *soldier : *_base->getSoldiers())
+				{
+					Craft *soldier_craft = soldier->getCraft();
+					if (soldier_craft != 0)
+					{
+						if (soldier_craft->getStatus() == "STR_OUT")
+							continue;
+					}
+					if (soldier_craft != craft)
+					{
+						for (auto *invItem : *soldier->getEquipmentLayout())
+						{
+							// ignore fixed weapons...
+							if (!invItem->isFixed())
+							{
+								tempBaseSoldierEquipmentItems.addItem(invItem->getItemType());
+							}
+							// ...but not their ammo
+							for (int slot = 0; slot < RuleItem::AmmoSlotMax; ++slot)
+							{
+								const std::string &invItemAmmo = invItem->getAmmoItemForSlot(slot);
+								if (invItemAmmo != "NONE")
+								{
+									tempBaseSoldierEquipmentItems.addItem(invItemAmmo);
+								}
+							}
+						}
+					}
+				}
+			}
+
 			// This is a bit tricky... here's what we're doing:
 			// * Temporarily use the `soldierItems` list to remember extra craft items (i.e. items that are not equipped)
 			// * Move all equipment from the base into the craft.
@@ -976,9 +1025,17 @@ void CraftEquipmentState::btnInventoryClick(Action *)
 
 				if (!rule->getVehicleUnit())
 				{
-					moveRightByValue(INT_MAX, true);
+					if (apocInventory && !fullInventory)
+					{
+						moveRightByValue(_base->getStorageItems()->getItem(item_name) - tempBaseSoldierEquipmentItems.getItem(item_name), true);
+					}
+					else
+					{
+						moveRightByValue(INT_MAX, true);
+					}
 				}
 			}
+			_returningFromInventory = true;
 		}
 
 		SavedBattleGame *bgame = new SavedBattleGame(_game->getMod(), _game->getLanguage());

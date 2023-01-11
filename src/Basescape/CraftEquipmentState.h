@@ -41,7 +41,7 @@ class Base;
 class CraftEquipmentState : public State
 {
 private:
-	TextButton *_btnOk, *_btnClear, *_btnInventory;
+	TextButton *_btnOk, *_btnClear, *_btnInventory, *_btnInventoryPlus, *_btnInventoryMinus;
 	TextEdit *_btnQuickSearch;
 	Window *_window;
 	Text *_txtTitle, *_txtItem, *_txtStores, *_txtAvailable, *_txtUsed, *_txtCrew;
