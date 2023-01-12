@@ -56,7 +56,7 @@ BaseNameState::BaseNameState(Base *base, Globe *globe, bool first, bool fixedLoc
 	_btnOk = new TextButton(162, 12, 47, 118);
 	_txtTitle = new Text(182, 17, 37, 70);
 	_edtName = new TextEdit(this, 127, 16, 59, 94);
-	_txtArea = new Text(160, 9, 68, 84);
+	_txtArea = new Text(180, 9, 38, 84);
 
 	// Set palette
 	setInterface("baseNaming");
@@ -109,6 +109,7 @@ BaseNameState::BaseNameState(Base *base, Globe *globe, bool first, bool fixedLoc
 	{
 		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(area)));
 	}
+	_txtArea->setAlign(ALIGN_CENTER);
 
 	if (!_game->getMod()->getBaseNamesFirst().empty())
 	{

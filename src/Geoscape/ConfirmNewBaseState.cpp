@@ -53,7 +53,7 @@ ConfirmNewBaseState::ConfirmNewBaseState(Base *base, Globe *globe) : _base(base)
 	_btnOk = new TextButton(54, 12, 68, 104);
 	_btnCancel = new TextButton(54, 12, 138, 104);
 	_txtCost = new Text(120, 9, 68, 80);
-	_txtArea = new Text(160, 9, 68, 90);
+	_txtArea = new Text(140, 9, 68, 90);
 
 	// Set palette
 	setInterface("geoscape");
@@ -105,6 +105,12 @@ ConfirmNewBaseState::ConfirmNewBaseState(Base *base, Globe *globe) : _base(base)
 	else
 	{
 		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(area)));
+	}
+	if (_txtArea->getTextWidth() > _txtArea->getWidth())
+	{
+		_txtArea->setX(_window->getX() + 6);
+		_txtArea->setWidth(_window->getWidth() - 12);
+		_txtArea->setAlign(ALIGN_CENTER);
 	}
 }
 
