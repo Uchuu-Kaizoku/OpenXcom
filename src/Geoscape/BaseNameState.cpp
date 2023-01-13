@@ -28,8 +28,6 @@
 #include "../Savegame/SavedGame.h"
 #include "../Savegame/Region.h"
 #include "../Savegame/Country.h"
-#include "../Mod/RuleRegion.h"
-#include "../Mod/RuleCountry.h"
 #include "../Basescape/PlaceLiftState.h"
 #include "../Engine/Options.h"
 #include "../Engine/RNG.h"

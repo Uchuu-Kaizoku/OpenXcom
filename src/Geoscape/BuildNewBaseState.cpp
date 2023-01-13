@@ -66,12 +66,23 @@ BuildNewBaseState::BuildNewBaseState(Base *base, Globe *globe, bool first) : _ba
 	_btnZoomIn = new InteractiveSurface(23, 23, 295 + dx * 2, 156 + dy);
 	_btnZoomOut = new InteractiveSurface(13, 17, 300 + dx * 2, 182 + dy);
 
-	_window = new Window(this, 256, 37, 0, 0);
+	_window = new Window(this, 256, (Options::oxceNewBaseHoverAreaInfo == 1) ? 37 : 28, 0, 0);
 	_window->setX(dx);
 	_window->setDY(0);
-	_btnCancel = new TextButton(54, 12, 186 + dx, 8);
+	_btnCancel = new TextButton(54, 12, 186 + dx, (Options::oxceNewBaseHoverAreaInfo == 1) ? 13 : 8);
 	_txtTitle = new Text(180, 16, 8 + dx, 6);
-	_txtArea = new Text(240, 9, 8 + dx, 19);
+
+	if (Options::oxceNewBaseHoverAreaInfo > 0)
+	{
+		_txtArea = new Text(240, 9, 8 + dx, 19); // Top
+		if (Options::oxceNewBaseHoverAreaInfo == 2) // Bottom
+		{
+			_windowArea = new Window(this, 256, 28, 0, 200 - 28);
+			_windowArea->setX(dx);
+			_windowArea->setY(globe->getHeight() - 28);
+			_txtArea->setY(globe->getHeight() - 18);
+		}
+	}
 
 	_hoverTimer = new Timer(50);
 	_hoverTimer->onTimer((StateHandler)&BuildNewBaseState::hoverRedraw);
@@ -90,7 +101,15 @@ BuildNewBaseState::BuildNewBaseState(Base *base, Globe *globe, bool first) : _ba
 	add(_window, "genericWindow", "geoscape");
 	add(_btnCancel, "genericButton2", "geoscape");
 	add(_txtTitle, "genericText", "geoscape");
-	add(_txtArea, "genericText", "geoscape");
+
+	if (Options::oxceNewBaseHoverAreaInfo > 0)
+	{
+		if (Options::oxceNewBaseHoverAreaInfo == 2)
+		{
+			add(_windowArea, "genericWindow", "geoscape");
+		}
+		add(_txtArea, "genericText", "geoscape");
+	}
 
 	// Set up objects
 	_globe->onMouseClick((ActionHandler)&BuildNewBaseState::globeClick);
@@ -138,6 +157,11 @@ BuildNewBaseState::BuildNewBaseState(Base *base, Globe *globe, bool first) : _ba
 	_txtTitle->setText(tr("STR_SELECT_SITE_FOR_NEW_BASE"));
 	_txtTitle->setVerticalAlign(ALIGN_MIDDLE);
 	_txtTitle->setWordWrap(true);
+
+	if (Options::oxceNewBaseHoverAreaInfo == 2)
+	{
+		setWindowBackground(_windowArea, "geoscape");
+	}
 
 	if (_first)
 	{
@@ -201,7 +225,6 @@ void BuildNewBaseState::globeHover(Action *action)
 
 void BuildNewBaseState::hoverRedraw(void)
 {
-	static std::string region, country;
 	double lon, lat;
 	_globe->cartToPolar(_mousex, _mousey, &lon, &lat);
 	if (lon == lon && lat == lat)
@@ -209,15 +232,18 @@ void BuildNewBaseState::hoverRedraw(void)
 		_globe->setNewBaseHoverPos(lon,lat);
 		_globe->setNewBaseHover(true);
 
-		region = tr(Region::getRegionName(_game->getSavedGame()->getRegions(), lon, lat));
-		country = tr(Country::getCountryName(_game->getSavedGame()->getCountries(), lon, lat));
-		if (country.empty())
+		if (Options::oxceNewBaseHoverAreaInfo > 0)
 		{
-			_txtArea->setText(tr("STR_AREA_").arg(region));
-		}
-		else
-		{
-			_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(region)));
+			std::string region = tr(Region::getRegionName(_game->getSavedGame()->getRegions(), lon, lat));
+			std::string country = tr(Country::getCountryName(_game->getSavedGame()->getCountries(), lon, lat));
+			if (country.empty())
+			{
+				_txtArea->setText(tr("STR_AREA_").arg(region));
+			}
+			else
+			{
+				_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(region)));
+			}
 		}
 	}
 	if (Options::globeRadarLines && !(AreSame(_oldlat, lat) && AreSame(_oldlon, lon)) )
@@ -416,7 +442,11 @@ void BuildNewBaseState::resize(int &dX, int &dY)
 	for (std::vector<Surface*>::const_iterator i = _surfaces.begin(); i != _surfaces.end(); ++i)
 	{
 		(*i)->setX((*i)->getX() + dX / 2);
-		if (*i != _window && *i != _btnCancel && *i != _txtTitle && *i != _txtArea)
+		if (Options::oxceNewBaseHoverAreaInfo == 2 && (*i == _windowArea || *i == _txtArea)) // Bottom
+		{
+			(*i)->setY((*i)->getY() + dY);
+		}
+		else if (*i != _window && *i != _btnCancel && *i != _txtTitle && *i != _windowArea && *i != _txtArea)
 		{
 			(*i)->setY((*i)->getY() + dY / 2);
 		}
