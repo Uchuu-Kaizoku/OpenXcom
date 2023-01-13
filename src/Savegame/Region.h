@@ -56,6 +56,10 @@ public:
 	std::vector<int> &getActivityAlien();
 	/// start new month of activity
 	void newMonth();
+	/// get region at globe coordinates
+	static Region *getRegion(std::vector<Region *> *regions, double lon, double lat);
+	/// get region name at globe coordinates
+	static std::string getRegionName(std::vector<Region *> *regions, double lon, double lat);
 };
 
 }

@@ -78,6 +78,10 @@ public:
 	void setPact();
 	/// can be (re)infiltrated?
 	bool canBeInfiltrated();
+	/// get country at globe coordinates
+	static Country* getCountry(std::vector<Country *> *countries, double lon, double lat);
+	/// get country name at globe coordinates
+	static std::string getCountryName(std::vector<Country *> *countries, double lon, double lat);
 };
 
 }

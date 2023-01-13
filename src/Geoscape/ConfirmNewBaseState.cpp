@@ -77,34 +77,20 @@ ConfirmNewBaseState::ConfirmNewBaseState(Base *base, Globe *globe) : _base(base)
 	_btnCancel->onMouseClick((ActionHandler)&ConfirmNewBaseState::btnCancelClick);
 	_btnCancel->onKeyboardPress((ActionHandler)&ConfirmNewBaseState::btnCancelClick, Options::keyCancel);
 
-	std::string area, country;
-	for (std::vector<Region*>::iterator i = _game->getSavedGame()->getRegions()->begin(); i != _game->getSavedGame()->getRegions()->end(); ++i)
-	{
-		if ((*i)->getRules()->insideRegion(_base->getLongitude(), _base->getLatitude()))
-		{
-			_cost = (*i)->getRules()->getBaseCost();
-			area = tr((*i)->getRules()->getType());
-			break;
-		}
-	}
-	for (std::vector<Country *>::iterator i = _game->getSavedGame()->getCountries()->begin(); i != _game->getSavedGame()->getCountries()->end(); ++i)
-	{
-		if ((*i)->getRules()->insideCountry(_base->getLongitude(), _base->getLatitude()))
-		{
-			country = tr((*i)->getRules()->getType());
-			break;
-		}
-	}
+	Region *r = Region::getRegion(_game->getSavedGame()->getRegions(), _base->getLongitude(), _base->getLatitude());
 
+	_cost = r->getRules()->getBaseCost();
 	_txtCost->setText(tr("STR_COST_").arg(Unicode::formatFunding(_cost)));
 
+	std::string region = tr(r->getRules()->getType());
+	std::string country = tr(Country::getCountryName(_game->getSavedGame()->getCountries(), _base->getLongitude(), _base->getLatitude()));
 	if (country.empty())
 	{
-		_txtArea->setText(tr("STR_AREA_").arg(area));
+		_txtArea->setText(tr("STR_AREA_").arg(region));
 	}
 	else
 	{
-		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(area)));
+		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(region)));
 	}
 	if (_txtArea->getTextWidth() > _txtArea->getWidth())
 	{
