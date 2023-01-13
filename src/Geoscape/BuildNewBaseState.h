@@ -40,7 +40,7 @@ private:
 	Base *_base;
 	Globe *_globe;
 	InteractiveSurface *_btnRotateLeft, *_btnRotateRight, *_btnRotateUp, *_btnRotateDown, *_btnZoomIn, *_btnZoomOut;
-	Window *_window;
+	Window *_window, *_windowArea;
 	Text *_txtTitle, *_txtArea;
 	TextButton *_btnCancel;
 	Timer *_hoverTimer;
