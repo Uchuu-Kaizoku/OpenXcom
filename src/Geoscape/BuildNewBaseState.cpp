@@ -31,6 +31,8 @@
 #include "../Savegame/Base.h"
 #include "../Savegame/Craft.h"
 #include "../Savegame/SavedGame.h"
+#include "../Savegame/Region.h"
+#include "../Savegame/Country.h"
 #include "BaseNameState.h"
 #include "ConfirmNewBaseState.h"
 #include "../Engine/Options.h"
@@ -64,11 +66,12 @@ BuildNewBaseState::BuildNewBaseState(Base *base, Globe *globe, bool first) : _ba
 	_btnZoomIn = new InteractiveSurface(23, 23, 295 + dx * 2, 156 + dy);
 	_btnZoomOut = new InteractiveSurface(13, 17, 300 + dx * 2, 182 + dy);
 
-	_window = new Window(this, 256, 28, 0, 0);
+	_window = new Window(this, 256, 37, 0, 0);
 	_window->setX(dx);
 	_window->setDY(0);
 	_btnCancel = new TextButton(54, 12, 186 + dx, 8);
 	_txtTitle = new Text(180, 16, 8 + dx, 6);
+	_txtArea = new Text(240, 9, 8 + dx, 19);
 
 	_hoverTimer = new Timer(50);
 	_hoverTimer->onTimer((StateHandler)&BuildNewBaseState::hoverRedraw);
@@ -87,6 +90,7 @@ BuildNewBaseState::BuildNewBaseState(Base *base, Globe *globe, bool first) : _ba
 	add(_window, "genericWindow", "geoscape");
 	add(_btnCancel, "genericButton2", "geoscape");
 	add(_txtTitle, "genericText", "geoscape");
+	add(_txtArea, "genericText", "geoscape");
 
 	// Set up objects
 	_globe->onMouseClick((ActionHandler)&BuildNewBaseState::globeClick);
@@ -197,12 +201,24 @@ void BuildNewBaseState::globeHover(Action *action)
 
 void BuildNewBaseState::hoverRedraw(void)
 {
+	static std::string region, country;
 	double lon, lat;
 	_globe->cartToPolar(_mousex, _mousey, &lon, &lat);
 	if (lon == lon && lat == lat)
 	{
 		_globe->setNewBaseHoverPos(lon,lat);
 		_globe->setNewBaseHover(true);
+
+		region = tr(Region::getRegionName(_game->getSavedGame()->getRegions(), lon, lat));
+		country = tr(Country::getCountryName(_game->getSavedGame()->getCountries(), lon, lat));
+		if (country.empty())
+		{
+			_txtArea->setText(tr("STR_AREA_").arg(region));
+		}
+		else
+		{
+			_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(region)));
+		}
 	}
 	if (Options::globeRadarLines && !(AreSame(_oldlat, lat) && AreSame(_oldlon, lon)) )
 	{
@@ -400,7 +416,7 @@ void BuildNewBaseState::resize(int &dX, int &dY)
 	for (auto* surface : _surfaces)
 	{
 		surface->setX(surface->getX() + dX / 2);
-		if (surface != _window && surface != _btnCancel && surface != _txtTitle)
+		if (surface != _window && surface != _btnCancel && surface != _txtTitle && surface != _txtArea)
 		{
 			surface->setY(surface->getY() + dY / 2);
 		}
