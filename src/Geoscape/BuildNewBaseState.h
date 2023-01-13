@@ -41,7 +41,7 @@ private:
 	Globe *_globe;
 	InteractiveSurface *_btnRotateLeft, *_btnRotateRight, *_btnRotateUp, *_btnRotateDown, *_btnZoomIn, *_btnZoomOut;
 	Window *_window;
-	Text *_txtTitle;
+	Text *_txtTitle, *_txtArea;
 	TextButton *_btnCancel;
 	Timer *_hoverTimer;
 	bool _first;
