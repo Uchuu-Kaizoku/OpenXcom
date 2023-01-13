@@ -333,4 +333,38 @@ bool Country::canBeInfiltrated()
 	return false;
 }
 
+/**
+ * get country at globe coordinates
+ * @param countries Pointer to a vector of Country pointers like in SavedGame::getCountries()
+ * @param lon Longitude in radians.
+ * @param lat Latitude in radians.
+ * @return Country pointer or 0
+ */
+Country* Country::getCountry(std::vector<Country*> *countries, double lon, double lat)
+{
+	for (std::vector<Country *>::iterator i = countries->begin(); i != countries->end(); ++i)
+	{
+		if ((*i)->getRules()->insideCountry(lon, lat))
+		{
+			return *i;
+		}
+	}
+	return 0;
+}
+
+/**
+ * get country name at globe coordinates
+ * @param countries Pointer to a vector of Country pointers like in SavedGame::getCountries()
+ * @param lon Longitude in radians.
+ * @param lat Latitude in radians.
+ * @return unique country language string or empty string
+ */
+std::string Country::getCountryName(std::vector<Country *> *countries, double lon, double lat)
+{
+	Country *c = getCountry(countries, lon, lat);
+	if (c != 0)
+		return c->getRules()->getType();
+	return "";
+}
+
 }

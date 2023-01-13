@@ -120,4 +120,38 @@ void Region::newMonth()
 		_activityXcom.erase(_activityXcom.begin());
 }
 
+/**
+ * get region at globe coordinates
+ * @param regions Pointer to a vector of Region pointers like in SavedGame::getRegions()
+ * @param lon Longitude in radians.
+ * @param lat Latitude in radians.
+ * @return Region pointer or 0
+ */
+Region* Region::getRegion(std::vector<Region *> *regions, double lon, double lat)
+{
+	for (std::vector<Region *>::iterator i = regions->begin(); i != regions->end(); ++i)
+	{
+		if ((*i)->getRules()->insideRegion(lon, lat))
+		{
+			return *i;
+		}
+	}
+	return 0;
+}
+
+/**
+ * get region name at globe coordinates
+ * @param regions Pointer to a vector of Region pointers like in SavedGame::getRegions()
+ * @param lon Longitude in radians.
+ * @param lat Latitude in radians.
+ * @return unique region language string or empty string
+ */
+std::string Region::getRegionName(std::vector<Region *> *regions, double lon, double lat)
+{
+	Region *r = getRegion(regions, lon, lat);
+	if (r != 0)
+		return r->getRules()->getType();
+	return "";
+}
+
 }

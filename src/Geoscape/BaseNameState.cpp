@@ -84,30 +84,16 @@ BaseNameState::BaseNameState(Base *base, Globe *globe, bool first, bool fixedLoc
 	_txtTitle->setBig();
 	_txtTitle->setText(tr("STR_BASE_NAME"));
 
-	std::string area, country;
-	for (std::vector<Region *>::iterator i = _game->getSavedGame()->getRegions()->begin(); i != _game->getSavedGame()->getRegions()->end(); ++i)
-	{
-		if ((*i)->getRules()->insideRegion(_base->getLongitude(), _base->getLatitude()))
-		{
-			area = tr((*i)->getRules()->getType());
-			break;
-		}
-	}
-	for (std::vector<Country *>::iterator i = _game->getSavedGame()->getCountries()->begin(); i != _game->getSavedGame()->getCountries()->end(); ++i)
-	{
-		if ((*i)->getRules()->insideCountry(_base->getLongitude(), _base->getLatitude()))
-		{
-			country = tr((*i)->getRules()->getType());
-			break;
-		}
-	}
+
+	std::string region = tr(Region::getRegionName(_game->getSavedGame()->getRegions(), _base->getLongitude(), _base->getLatitude()));
+	std::string country = tr(Country::getCountryName(_game->getSavedGame()->getCountries(), _base->getLongitude(), _base->getLatitude()));
 	if (country.empty())
 	{
-		_txtArea->setText(tr("STR_AREA_").arg(area));
+		_txtArea->setText(tr("STR_AREA_").arg(region));
 	}
 	else
 	{
-		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(area)));
+		_txtArea->setText(tr("STR_AREA_").arg(tr("STR_COUNTRIES_COMMA").arg(country).arg(region)));
 	}
 	_txtArea->setAlign(ALIGN_CENTER);
 
