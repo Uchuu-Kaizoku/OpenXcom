@@ -96,6 +96,18 @@ void TextList::setX(int x)
 	_scrollbar->setX(getX() + getWidth() + _scrollPos);
 	if (_selector != 0)
 		_selector->setX(getX());
+
+	if (_arrowPos != -1)
+	{
+		for (std::vector<ArrowButton *>::iterator i = _arrowLeft.begin(); i < _arrowLeft.end(); ++i)
+		{
+			(*i)->setX(x + _arrowPos);
+		}
+		for (std::vector<ArrowButton *>::iterator i = _arrowRight.begin(); i < _arrowRight.end(); ++i)
+		{
+			(*i)->setX(x + _arrowPos + 12);
+		}
+	}
 }
 
 /**
