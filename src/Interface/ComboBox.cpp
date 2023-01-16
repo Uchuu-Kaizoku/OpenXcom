@@ -298,11 +298,12 @@ void ComboBox::setDropdown(int options)
 {
 	int items = std::min(options, MAX_ITEMS);
 	int h = _button->getFont()->getHeight() + _button->getFont()->getSpacing();
-	int dy = (Options::baseYResolution - 200) / 2;
-	while (_window->getY() + items * h + VERTICAL_MARGIN * 2 > 200 + dy)
+	while (_window->getY() + items * h + VERTICAL_MARGIN * 2 > Options::baseYResolution - h)
 	{
 		items--;
 	}
+	if (items < 1)
+		items = 1;
 
 	int popupHeight = items * h + VERTICAL_MARGIN * 2;
 	int popupY = getPopupWindowY(getHeight(), getY(), popupHeight, _popupAboveButton);
