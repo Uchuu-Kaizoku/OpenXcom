@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 #include <map>
 #include <string>
@@ -38,7 +38,7 @@ class Base;
  * Equipment screen that lets the player
  * pick the equipment to carry on a craft.
  */
-class CraftEquipmentState : public State
+class CraftEquipmentState : public ListState
 {
 private:
 	TextButton *_btnOk, *_btnClear, *_btnInventory;

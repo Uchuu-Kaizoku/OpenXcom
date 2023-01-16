@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -30,7 +30,7 @@ class TextList;
 /**
  * Promotions screen that displays new soldier ranks.
  */
-class PromotionsState : public State
+class PromotionsState : public ListState
 {
 private:
 	TextButton *_btnOk;

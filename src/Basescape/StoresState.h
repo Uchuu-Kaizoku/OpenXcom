@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 
 namespace OpenXcom
@@ -62,7 +62,7 @@ struct StoredItem
  * Stores window that displays all
  * the items currently stored in a base.
  */
-class StoresState : public State
+class StoresState : public ListState
 {
 private:
 	Base *_base;

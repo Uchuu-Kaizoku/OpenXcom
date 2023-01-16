@@ -19,7 +19,7 @@
  */
 #include <vector>
 #include <string>
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -34,7 +34,7 @@ class TextList;
 /**
  * SoldierBonus window displays all soldier bonuses.
  */
-class SoldierBonusState : public State
+class SoldierBonusState : public ListState
 {
 private:
 	Base *_base;

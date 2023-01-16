@@ -102,7 +102,7 @@ public:
 	/// redraw all the text-type surfaces.
 	void redrawText();
 	/// center all surfaces relative to the screen.
-	void centerAllSurfaces();
+	virtual void centerAllSurfaces();
 	/// lower all surfaces by half the screen height.
 	void lowerAllSurfaces();
 	/// switch the colours to use the battlescape palette.

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -33,7 +33,7 @@ class RuleManufacture;
  * Global Manufacture screen that provides overview
  * of the ongoing manufacturing operations in all the bases.
  */
-class GlobalManufactureState : public State
+class GlobalManufactureState : public ListState
 {
 private:
 	TextButton *_btnOk;

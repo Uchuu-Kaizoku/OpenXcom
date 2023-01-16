@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 
 namespace OpenXcom
@@ -36,7 +36,7 @@ class ComboBox;
 /**
  * Window which displays possible research projects.
  */
-class NewResearchListState : public State
+class NewResearchListState : public ListState
 {
 private:
 	Base *_base;

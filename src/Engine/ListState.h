@@ -17,37 +17,29 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/ListState.h"
+#include "State.h"
+#include <unordered_map>
 
 namespace OpenXcom
 {
 
-class Base;
-class TextButton;
-class Window;
-class Text;
-class TextList;
-
 /**
- * Transfers window that displays all
- * the items currently in-transit to a base.
+ * Game state with automatic resizing of lists.
  */
-class TransfersState : public ListState
+class ListState : public State
 {
-private:
-	Base *_base;
-
-	TextButton *_btnOk;
-	Window *_window;
-	Text *_txtTitle, *_txtItem, *_txtQuantity, *_txtArrivalTime;
-	TextList *_lstTransfers;
-public:
-	/// Creates the Transfers state.
-	TransfersState(Base *base);
-	/// Cleans up the Transfers state.
-	~TransfersState();
-	/// Handler for clicking the OK button.
-	void btnOkClick(Action *action);
+  private:
+	std::unordered_map<Surface *, bool> _anchoredSurfaces;
+	Window *_mainWindow = 0;
+  public:
+	/// Centers and adjusts height of all the surfaces on the screen depending on the oxceListsHeightPercentage option.
+	virtual void centerAllSurfaces() override;
+	/// Updates the scale with adjustments for arbitrary height lists.
+	virtual void resize(int &dX, int &dY) override;
+	/// Anchor to the bottom of the screen.
+	void setAnchoredBottom(Surface *surface, bool anchor = true);
+	/// Is Surface anchored to the bottom of the screen?
+	bool isAnchoredBottom(Surface *surface);
 };
 
 }

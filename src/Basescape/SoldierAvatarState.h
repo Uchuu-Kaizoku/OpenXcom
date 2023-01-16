@@ -18,7 +18,7 @@
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <vector>
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include "../Savegame/SoldierAvatar.h"
 
 namespace OpenXcom
@@ -36,7 +36,7 @@ class SoldierAvatar;
  * Select Avatar window that allows changing
  * of the soldier's avatar.
  */
-class SoldierAvatarState : public State
+class SoldierAvatarState : public ListState
 {
 private:
 	Base *_base;

@@ -357,6 +357,7 @@
     <ClCompile Include="Engine\InteractiveSurface.cpp" />
     <ClCompile Include="Engine\Language.cpp" />
     <ClCompile Include="Engine\LanguagePlurality.cpp" />
+    <ClCompile Include="Engine\ListState.cpp" />
     <ClCompile Include="Engine\LocalizedText.cpp" />
     <ClCompile Include="Engine\ModInfo.cpp" />
     <ClCompile Include="Engine\Music.cpp" />
@@ -741,6 +742,7 @@
     <ClInclude Include="Engine\InteractiveSurface.h" />
     <ClInclude Include="Engine\Language.h" />
     <ClInclude Include="Engine\LanguagePlurality.h" />
+    <ClInclude Include="Engine\ListState.h" />
     <ClInclude Include="Engine\LocalizedText.h" />
     <ClInclude Include="Engine\Logger.h" />
     <ClInclude Include="Engine\ModInfo.h" />

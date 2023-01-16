@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -57,7 +57,7 @@ struct RecoveryItem { std::string name; int value; };
  * Debriefing screen shown after a Battlescape
  * mission that displays the results.
  */
-class DebriefingState : public State
+class DebriefingState : public ListState
 {
 private:
 	typedef std::pair<std::string, UnitStats> SoldierStatsEntry;

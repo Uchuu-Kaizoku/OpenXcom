@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 #include "SoldierSortUtil.h"
 
@@ -37,7 +37,7 @@ struct SortFunctor;
  * Soldiers screen that lets the player
  * manage all the soldiers in a base.
  */
-class SoldiersState : public State
+class SoldiersState : public ListState
 {
 private:
 	TextButton *_btnOk, *_btnPsiTraining, *_btnTraining, *_btnMemorial;

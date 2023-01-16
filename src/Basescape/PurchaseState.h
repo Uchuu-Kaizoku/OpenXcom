@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include "../Savegame/Transfer.h"
 #include <vector>
 #include <string>
@@ -40,7 +40,7 @@ class RuleItem;
  * Purchase/Hire screen that lets the player buy
  * new items for a base.
  */
-class PurchaseState : public State
+class PurchaseState : public ListState
 {
 private:
 	Base *_base;

@@ -18,7 +18,7 @@
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "../Battlescape/Position.h"
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include "../Mod/ArticleDefinition.h"
 #include "../Mod/Armor.h"
 #include "../Mod/MapData.h"
@@ -43,7 +43,7 @@ template<typename T, typename I> class ScriptValues;
 /**
  * A screen, where you can see the (almost) raw ruleset corresponding to the given Ufopedia article.
  */
-class StatsForNerdsState : public State
+class StatsForNerdsState : public ListState
 {
 private:
 	Window *_window;

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include "DebriefingState.h"
 #include <vector>
 
@@ -34,7 +34,7 @@ class Base;
  * Screen shown when there's not enough equipment
  * to re-equip a craft after a mission.
  */
-class CannotReequipState : public State
+class CannotReequipState : public ListState
 {
 private:
 	std::vector<ReequipStat> _missingItems;

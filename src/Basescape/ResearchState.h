@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -32,7 +32,7 @@ class Base;
  * Research screen that lets the player manage
  * all the researching operations of a base.
  */
-class ResearchState : public State
+class ResearchState : public ListState
 {
 private:
 	Base *_base;
