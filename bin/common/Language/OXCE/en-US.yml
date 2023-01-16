@@ -315,6 +315,8 @@ en-US:
   STR_OFF_CENTRE_SHOOTING_DESC: "Soldiers will automatically try to adjust the firing angle slightly in case there is no line of fire."
   STR_NEW_BASE_HOVER_AREA_INFO: "Display area when placing new base"
   STR_NEW_BASE_HOVER_AREA_INFO_DESC: "Show the country and region under the cursor when placing a new base. 0: Off 1: Top 2: Bottom"
+  STR_LISTS_SCREEN_HEIGHT_PERCENTAGE: "Lists screen height percentage"
+  STR_LISTS_SCREEN_HEIGHT_PERCENTAGE_DESC: "Changes the height of most list screens to a percentage of the game's vertical resolution. Set to 0 to disable."
 #===================
   STR_GRAPHS_ZOOM_IN: "Zoom In (Graphs)"
   STR_GRAPHS_ZOOM_OUT: "Zoom Out (Graphs)"

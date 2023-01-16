@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 
 namespace OpenXcom
@@ -37,7 +37,7 @@ struct SortFunctor;
  * Screen shown monthly to allow changing
  * soldiers currently in psi training.
  */
-class AllocateTrainingState : public State
+class AllocateTrainingState : public ListState
 {
 private:
 	TextButton *_btnOk;

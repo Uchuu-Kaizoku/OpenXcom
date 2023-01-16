@@ -18,7 +18,7 @@
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <vector>
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -59,7 +59,7 @@ struct ArmorItem
  * Select Armor window that allows changing
  * of the armor equipped on a soldier.
  */
-class SoldierArmorState : public State
+class SoldierArmorState : public ListState
 {
 private:
 	Base *_base;

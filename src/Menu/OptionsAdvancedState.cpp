@@ -316,6 +316,11 @@ void OptionsAdvancedState::lstOptionsClick(Action *action)
 			min = 0;
 			max = 2;
 		}
+		else if (i == &Options::oxceListsScreenHeightPercentage)
+		{
+			min = 0;
+			max = 100;
+		}
 
 		if (*i < min)
 		{

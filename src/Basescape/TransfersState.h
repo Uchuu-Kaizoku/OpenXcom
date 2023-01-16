@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -32,7 +32,7 @@ class TextList;
  * Transfers window that displays all
  * the items currently in-transit to a base.
  */
-class TransfersState : public State
+class TransfersState : public ListState
 {
 private:
 	Base *_base;

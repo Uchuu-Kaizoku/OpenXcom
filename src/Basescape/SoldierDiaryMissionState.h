@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -32,7 +32,7 @@ class Soldier;
  * Diary window that show
  * mission details for a soldier.
  */
-class SoldierDiaryMissionState : public State
+class SoldierDiaryMissionState : public ListState
 {
 private:
 	Soldier *_soldier;

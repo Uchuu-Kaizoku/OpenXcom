@@ -227,6 +227,7 @@ void create()
 	_info.push_back(OptionInfo("oxceRememberDisabledCraftWeapons", &oxceRememberDisabledCraftWeapons, false, "STR_REMEMBER_DISABLED_CRAFT_WEAPONS", "STR_OXCE"));
 	_info.push_back(OptionInfo("oxceEnableOffCentreShooting", &oxceEnableOffCentreShooting, false, "STR_OFF_CENTRE_SHOOTING", "STR_OXCE"));
 	_info.push_back(OptionInfo("oxceNewBaseHoverAreaInfo", &oxceNewBaseHoverAreaInfo, 0, "STR_NEW_BASE_HOVER_AREA_INFO", "STR_OXCE"));
+	_info.push_back(OptionInfo("oxceListsScreenHeightPercentage", &oxceListsScreenHeightPercentage, 0, "STR_LISTS_SCREEN_HEIGHT_PERCENTAGE", "STR_OXCE"));
 
 	// OXCE hidden
 #ifdef __MOBILE__

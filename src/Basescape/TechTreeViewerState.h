@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 #include <map>
 #include <string>
@@ -40,7 +40,7 @@ enum TTVMode { TTV_NONE, TTV_RESEARCH, TTV_MANUFACTURING, TTV_FACILITIES, TTV_IT
 /**
  * TechTreeViewer screen, where you can browse the Tech Tree.
  */
-class TechTreeViewerState : public State
+class TechTreeViewerState : public ListState
 {
 private:
 	TextButton *_btnOk, *_btnNew;

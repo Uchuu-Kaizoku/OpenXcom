@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -33,7 +33,7 @@ class RuleResearch;
  * Global Research screen that provides overview
  * of the ongoing research operations in all the bases.
  */
-class GlobalResearchState : public State
+class GlobalResearchState : public ListState
 {
 private:
 	TextButton *_btnOk;

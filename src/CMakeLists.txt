@@ -141,6 +141,7 @@ set ( engine_src
   Engine/InteractiveSurface.cpp
   Engine/Language.cpp
   Engine/LanguagePlurality.cpp
+  Engine/ListState.cpp
   Engine/LocalizedText.cpp
   Engine/ModInfo.cpp
   Engine/Music.cpp

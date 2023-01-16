@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -32,7 +32,7 @@ class TextList;
  * Screen that shows all the soldiers
  * that have died throughout the game.
  */
-class SoldierMemorialState : public State
+class SoldierMemorialState : public ListState
 {
 private:
 	TextButton *_btnOk, *_btnStatistics;

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 #include <string>
 
@@ -39,7 +39,7 @@ enum SoldierDiaryDisplay { DIARY_KILLS, DIARY_MISSIONS, DIARY_COMMENDATIONS };
 /**
  * Diary screen that lists soldier totals.
  */
-class SoldierDiaryPerformanceState : public State
+class SoldierDiaryPerformanceState : public ListState
 {
 private:
 	Base *_base;

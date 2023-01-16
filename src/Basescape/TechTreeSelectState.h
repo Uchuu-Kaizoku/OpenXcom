@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -32,7 +32,7 @@ class TextList;
 /**
  * Window which allows selecting a topic for the Tech Tree Viewer.
  */
-class TechTreeSelectState : public State
+class TechTreeSelectState : public ListState
 {
 private:
 	TechTreeViewerState *_parent;

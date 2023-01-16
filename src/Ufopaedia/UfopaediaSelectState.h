@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include "Ufopaedia.h"
 #include <string>
 
@@ -36,7 +36,7 @@ namespace OpenXcom
 	 * UfopaediaSelectState is the screen that lists articles of a given type.
 	 */
 
-	class UfopaediaSelectState : public State
+	class UfopaediaSelectState : public ListState
 	{
 	public:
 		UfopaediaSelectState(const std::string &section, int heightOffset, int windowOffset);
