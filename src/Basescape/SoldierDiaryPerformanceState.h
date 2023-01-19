@@ -90,6 +90,8 @@ public:
 	void lstInfoMouseClick(Action *action);
 	/// Runs state functionality every cycle.
 	void think() override;
+	/// Updates the scale with adjustments for arbitrary height lists.
+	void resize(int &dX, int &dY) override;
 };
 
 }

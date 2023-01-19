@@ -203,7 +203,7 @@ void SoldierDiaryPerformanceState::init()
 {
 	State::init();
 	// Clear sprites
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != _commendations.size(); ++i)
 	{
 		_commendations[i]->clear();
 		_commendationDecorations[i]->clear();
@@ -370,8 +370,16 @@ void SoldierDiaryPerformanceState::drawSprites()
 	SurfaceSet* commendationSprite = _game->getMod()->getSurfaceSet("Commendations");
 	SurfaceSet* commendationDecoration = _game->getMod()->getSurfaceSet("CommendationDecorations");
 
+	// Add more surfaces as required for non-standard list sizes
+	for (int i = _commendations.size(); i < _lstCommendations->getVisibleRows(); i++)
+	{
+		_commendations.push_back(new Surface(31, 8, _commendations[i - 1]->getX(), _commendations[i - 1]->getY() + 8));
+		_commendationDecorations.push_back(new Surface(31, 8, _commendationDecorations[i - 1]->getX(), _commendationDecorations[i - 1]->getY() + 8));
+		add(_commendations[i]);
+		add(_commendationDecorations[i]);
+	}
 	// Clear sprites
-	for (int i = 0; i != 10; ++i)
+	for (int i = 0; i != _commendations.size(); ++i)
 	{
 		_commendations[i]->clear();
 		_commendationDecorations[i]->clear();
@@ -384,7 +392,7 @@ void SoldierDiaryPerformanceState::drawSprites()
 	{
 		RuleCommendations *commendation = pair.second->getRule();
 		// Skip commendations that are not visible in the textlist
-		if ( vectorIterator < scrollDepth || vectorIterator - scrollDepth >= (int)_commendations.size())
+		if (vectorIterator < scrollDepth || vectorIterator - scrollDepth >= _lstCommendations->getVisibleRows())
 		{
 			vectorIterator++;
 			continue;
@@ -514,6 +522,22 @@ void SoldierDiaryPerformanceState::think()
 	{
 		drawSprites();
 		_lastScrollPos = _lstCommendations->getScroll();
+	}
+}
+
+/**
+ * Updates the scale with adjustments for arbitrary height lists.
+ * @param dX delta of X;
+ * @param dY delta of Y;
+ */
+void SoldierDiaryPerformanceState::resize(int &dX, int &dY)
+{
+	int oldVisibleRows = _lstCommendations->getVisibleRows();
+	ListState::resize(dX, dY);
+
+	if (_lstCommendations->getVisibleRows() != oldVisibleRows)
+	{
+		drawSprites();
 	}
 }
 
