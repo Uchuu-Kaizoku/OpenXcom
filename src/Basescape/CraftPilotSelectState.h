@@ -18,7 +18,7 @@
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <vector>
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -33,7 +33,7 @@ class TextList;
 /**
  * Select Pilot window that allows assigning a pilot to a craft.
  */
-class CraftPilotSelectState : public State
+class CraftPilotSelectState : public ListState
 {
 private:
 	Base *_base;

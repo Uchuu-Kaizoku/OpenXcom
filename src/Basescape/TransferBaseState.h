@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 #include <vector>
 
 namespace OpenXcom
@@ -34,7 +34,7 @@ class DebriefingState;
  * Window that lets the player pick the base
  * to transfer items to.
  */
-class TransferBaseState : public State
+class TransferBaseState : public ListState
 {
 private:
 	Base *_base;

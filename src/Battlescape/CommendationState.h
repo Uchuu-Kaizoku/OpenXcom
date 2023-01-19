@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../Engine/State.h"
+#include "../Engine/ListState.h"
 
 namespace OpenXcom
 {
@@ -31,7 +31,7 @@ class Soldier;
 /**
  * Medals screen that displays new soldier medals.
  */
-class CommendationState : public State
+class CommendationState : public ListState
 {
 private:
 	TextButton *_btnOk;
