@@ -257,7 +257,7 @@ void Window::draw()
 
 	if (_bg != 0)
 	{
-		int verticalTiles = std::ceil((double)getHeight() / _bg->getHeight());
+		int verticalTiles = std::ceil(((double)getHeight() - _dy - square.y) / _bg->getHeight());
 
 		SurfaceCrop crop = _bg->getCrop();
 		crop.getCrop()->x = square.x - _dx;
@@ -266,7 +266,7 @@ void Window::draw()
 		for (int i = 0; i < verticalTiles; i++)
 		{
 			int y = ((i == 0) ? square.y : _dy) + (i * (_bg->getHeight()));
-			crop.getCrop()->h = (i < verticalTiles - 1) ? ((verticalTiles == 1) ? square.h : _bg->getHeight()) : (getHeight() - square.y) - y;
+			crop.getCrop()->h = (verticalTiles == 1) ? square.h : ((i < verticalTiles - 1) ? _bg->getHeight() : getHeight() - square.y - y);
 			crop.getCrop()->y = (i == 0) ? square.y - _dy : 0;
 			crop.setY(y);
 			crop.blit(this);
