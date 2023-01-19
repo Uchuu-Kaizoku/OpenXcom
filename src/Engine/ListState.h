@@ -18,7 +18,7 @@
  * along with OpenXcom.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "State.h"
-#include <map>
+#include <unordered_map>
 
 namespace OpenXcom
 {
@@ -29,17 +29,13 @@ namespace OpenXcom
 class ListState : public State
 {
   private:
-	std::map<Surface *, bool> _staticSurfaces;
-	std::map<Surface *, bool> _anchoredSurfaces;
+	std::unordered_map<Surface *, bool> _anchoredSurfaces;
+	Window *_mainWindow = 0;
   public:
 	/// Centers and adjusts height of all the surfaces on the screen depending on the oxceListsHeightPercentage option.
 	virtual void centerAllSurfaces() override;
 	/// Updates the scale with adjustments for arbitrary height lists.
 	virtual void resize(int &dX, int &dY) override;
-	/// Prevent a Surface from being moved and resized.
-	void setStatic(Surface *surface, bool bStatic = true);
-	/// Is Surface static?
-	bool isStatic(Surface *surface);
 	/// Anchor to the bottom of the screen.
 	void setAnchoredBottom(Surface *surface, bool anchor = true);
 	/// Is Surface anchored to the bottom of the screen?
