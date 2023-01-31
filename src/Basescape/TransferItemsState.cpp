@@ -73,6 +73,7 @@ TransferItemsState::TransferItemsState(Base *baseFrom, Base *baseTo, DebriefingS
 	_txtAmountTransfer = new Text(60, 17, 200, 24);
 	_txtAmountDestination = new Text(60, 17, 260, 24);
 	_cbxCategory = new ComboBox(this, 120, 16, 10, 24);
+	_cbxSort = new ComboBox(this, 82, 16, 230, 7);
 	_lstItems = new TextList(287, 128, 8, 44);
 
 	// Set palette
@@ -90,6 +91,7 @@ TransferItemsState::TransferItemsState(Base *baseFrom, Base *baseTo, DebriefingS
 	add(_txtAmountDestination, "text", "transferMenu");
 	add(_lstItems, "list", "transferMenu");
 	add(_cbxCategory, "text", "transferMenu");
+	add(_cbxSort, "text", "transferMenu");
 
 	centerAllSurfaces();
 
@@ -253,6 +255,14 @@ TransferItemsState::TransferItemsState(Base *baseFrom, Base *baseTo, DebriefingS
 	_cbxCategory->setOptions(_cats, true);
 	_cbxCategory->onChange((ActionHandler)&TransferItemsState::cbxCategoryChange);
 	_cbxCategory->onKeyboardPress((ActionHandler)&TransferItemsState::btnTransferAllClick, Options::keyTransferAll);
+
+	std::string itemValueString = std::string(tr("STR_ITEM")) + " " + std::string(tr("STR_VALUE"));
+	std::string totalValueString = std::string(tr("STR_TOTAL")) + " " + std::string(tr("STR_VALUE"));
+	Unicode::upperCase(itemValueString);
+	Unicode::upperCase(totalValueString);
+	_sortModes = {tr("STR_SORT_DEFAULT"), tr("STR_SIZE_UC"), tr("STR_SPACE_USED_UC"), itemValueString, totalValueString};
+	_cbxSort->setOptions(_sortModes);
+	_cbxSort->onChange((ActionHandler)&TransferItemsState::cbxCategoryChange);
 
 	_btnQuickSearch->setText(""); // redraw
 	_btnQuickSearch->onEnter((ActionHandler)&TransferItemsState::btnQuickSearchApply);
@@ -1049,8 +1059,9 @@ void TransferItemsState::cbxCategoryChange(Action *)
 	}
 	else
 	{
-		_currentSort = TransferSortDirection::BY_LIST_ORDER;
+		_currentSort = (TransferSortDirection)_cbxSort->getSelected();
 	}
+	_cbxSort->setSelected((size_t)_currentSort);
 
 	updateList();
 }

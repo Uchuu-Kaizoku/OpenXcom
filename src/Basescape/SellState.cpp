@@ -96,12 +96,13 @@ void SellState::delayedInit()
 	_btnTransfer = new TextButton(148, 16, 164, 176);
 	_txtTitle = new Text(310, 17, 5, 8);
 	_txtSales = new Text(150, 9, 10, 24);
-	_txtFunds = new Text(150, 9, 160, 24);
-	_txtSpaceUsed = new Text(150, 9, 160, 34);
+	_txtFunds = new Text(150, 9, 136, 24);
+	_txtSpaceUsed = new Text(150, 9, 136, 34);
 	_txtQuantity = new Text(54, 9, 136, 44);
 	_txtSell = new Text(96, 9, 190, 44);
 	_txtValue = new Text(40, 9, 270, 44);
 	_cbxCategory = new ComboBox(this, 120, 16, 10, 36);
+	_cbxSort = new ComboBox(this, 74, 16, 238, 27);
 	_lstItems = new TextList(287, 120, 8, 54);
 
 	// Set palette
@@ -123,6 +124,7 @@ void SellState::delayedInit()
 	add(_txtValue, "text", "sellMenu");
 	add(_lstItems, "list", "sellMenu");
 	add(_cbxCategory, "text", "sellMenu");
+	add(_cbxSort, "text", "sellMenu");
 
 	centerAllSurfaces();
 
@@ -328,6 +330,14 @@ void SellState::delayedInit()
 	_cbxCategory->onChange((ActionHandler)&SellState::cbxCategoryChange);
 	_cbxCategory->onKeyboardPress((ActionHandler)&SellState::btnSellAllClick, Options::keySellAll);
 	_cbxCategory->onKeyboardPress((ActionHandler)&SellState::btnSellAllButOneClick, Options::keySellAllButOne);
+
+	std::string itemValueString = std::string(tr("STR_ITEM")) + " " + std::string(tr("STR_VALUE"));
+	std::string totalValueString = std::string(tr("STR_TOTAL")) + " " + std::string(tr("STR_VALUE"));
+	Unicode::upperCase(itemValueString);
+	Unicode::upperCase(totalValueString);
+	_sortModes = {tr("STR_SORT_DEFAULT"), tr("STR_SIZE_UC"), tr("STR_SPACE_USED_UC"), itemValueString, totalValueString};
+	_cbxSort->setOptions(_sortModes);
+	_cbxSort->onChange((ActionHandler)&SellState::cbxCategoryChange);
 
 	_btnQuickSearch->setText(""); // redraw
 	_btnQuickSearch->onEnter((ActionHandler)&SellState::btnQuickSearchApply);
@@ -1113,8 +1123,9 @@ void SellState::cbxCategoryChange(Action *)
 	}
 	else
 	{
-		_currentSort = TransferSortDirection::BY_LIST_ORDER;
+		_currentSort = (TransferSortDirection)_cbxSort->getSelected();
 	}
+	_cbxSort->setSelected((size_t)_currentSort);
 
 	updateList();
 }

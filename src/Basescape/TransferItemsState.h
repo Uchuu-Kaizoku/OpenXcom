@@ -49,11 +49,11 @@ private:
 	TextEdit *_btnQuickSearch;
 	Window *_window;
 	Text *_txtTitle, *_txtQuantity, *_txtAmountTransfer, *_txtAmountDestination;
-	ComboBox *_cbxCategory;
+	ComboBox *_cbxCategory, *_cbxSort;
 	TextList *_lstItems;
 	std::vector<TransferRow> _items;
 	std::vector<int> _rows;
-	std::vector<std::string> _cats;
+	std::vector<std::string> _cats, _sortModes;
 	size_t _vanillaCategories;
 	size_t _sel;
 	int _total, _pQty, _cQty, _aQty;
