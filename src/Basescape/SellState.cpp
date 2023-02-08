@@ -94,15 +94,15 @@ void SellState::delayedInit()
 	_btnOk = new TextButton(148, 16, 8, 176);
 	_btnCancel = new TextButton(148, 16, 164, 176);
 	_btnTransfer = new TextButton(148, 16, 164, 176);
-	_txtTitle = new Text(310, 17, 5, 8);
+	_txtTitle = new Text(227, 17, 5, 8);
 	_txtSales = new Text(150, 9, 10, 24);
-	_txtFunds = new Text(150, 9, 136, 24);
-	_txtSpaceUsed = new Text(150, 9, 136, 34);
+	_txtFunds = new Text(150, 9, 160, 24);
+	_txtSpaceUsed = new Text(150, 9, 160, 34);
 	_txtQuantity = new Text(54, 9, 136, 44);
 	_txtSell = new Text(96, 9, 190, 44);
 	_txtValue = new Text(40, 9, 270, 44);
 	_cbxCategory = new ComboBox(this, 120, 16, 10, 36);
-	_cbxSort = new ComboBox(this, 74, 16, 238, 27);
+	_cbxSort = new ComboBox(this, 82, 16, 232, 6);
 	_lstItems = new TextList(287, 120, 8, 54);
 
 	// Set palette

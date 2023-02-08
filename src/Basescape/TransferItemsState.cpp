@@ -68,12 +68,12 @@ TransferItemsState::TransferItemsState(Base *baseFrom, Base *baseTo, DebriefingS
 	_btnQuickSearch = new TextEdit(this, 48, 9, 10, 13);
 	_btnOk = new TextButton(148, 16, 8, 176);
 	_btnCancel = new TextButton(148, 16, 164, 176);
-	_txtTitle = new Text(310, 17, 5, 8);
+	_txtTitle = new Text(227, 17, 5, 8);
 	_txtQuantity = new Text(50, 9, 150, 24);
 	_txtAmountTransfer = new Text(60, 17, 200, 24);
 	_txtAmountDestination = new Text(60, 17, 260, 24);
 	_cbxCategory = new ComboBox(this, 120, 16, 10, 24);
-	_cbxSort = new ComboBox(this, 82, 16, 230, 7);
+	_cbxSort = new ComboBox(this, 82, 16, 232, 6);
 	_lstItems = new TextList(287, 128, 8, 44);
 
 	// Set palette
